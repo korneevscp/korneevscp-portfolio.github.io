@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Korneev SCP - Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+<style>
+* {margin:0; padding:0; box-sizing:border-box;}
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #0f0f0f;
+    color: #00fff7;
+    line-height: 1.6;
+}
+.profile-img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 3px solid #00fff7;
+    object-fit: cover;
+    margin-bottom: 20px;
+    box-shadow: 0 0 15px rgba(0, 255, 247, 0.6);
+}
+section {
+    padding: 60px 20px;
+    max-width: 1000px;
+    margin: auto;
+}
+h2 {
+    color: #00fff7;
+    margin-bottom: 20px;
+    text-align: center;
+}
+header {
+    text-align: center;
+    padding: 60px 20px 50px;
+}
+header h1 {
+    font-size: 2.8rem;
+    margin-bottom: 10px;
+}
+header p {
+    color: #66ffff;
+    margin-bottom: 30px;
+}
+.btn {
+    display: inline-block;
+    background-color: #00fff7;
+    color: #0f0f0f;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    margin: 5px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+.btn:hover {
+    background-color: #00c8c8;
+    transform: translateY(-2px);
+}
+.projects, .videos, .addons {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-top: 30px;
+}
+.card {
+    background-color: #111;
+    border-left: 3px solid #00fff7;
+    border-radius: 10px;
+    padding: 20px;
+    transition: all 0.3s ease;
+}
+.card:hover {
+    transform: translateY(-3px);
+}
+.card h3 {
+    margin-bottom: 10px;
+}
+.card p {color: #a0f7f7;}
+.card a.btn {margin-top: 10px; display: inline-block;}
+.music-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-top: 30px;
+}
+.music-card {
+    background-color: #0a0a0a;
+    border-left: 4px solid #1de9b6;
+    border-radius: 10px;
+    padding: 20px;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 15px rgba(29, 233, 182, 0.5);
+}
+.music-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0 25px rgba(29, 233, 182, 0.7);
+}
+.music-card h3 {
+    margin-bottom: 10px;
+    color: #1de9b6;
+}
+.contact {
+    text-align: center;
+    margin-top: 20px;
+}
+.contact a {
+    display: inline-block;
+    margin: 10px 15px;
+    font-weight: bold;
+}
+.contact a.btn {
+    background-color: #00fff7;
+    color: #0f0f0f;
+    padding: 10px 20px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+.contact a.btn:hover {
+    background-color: #00c8c8;
+    transform: translateY(-2px);
+}
+footer {
+    text-align: center;
+    padding: 20px;
+    font-size: 0.9rem;
+    color: #555;
+}
+@media (max-width: 600px) {
+    header h1 {font-size: 2rem;}
+    .btn {padding: 8px 16px;}
+    .profile-img {width: 120px; height: 120px;}
+}
+</style>
+</head>
+<body>
+<header>
+    <img src="1.jpg" alt="Photo de Korneev SCP" class="profile-img">
+    <h1>Korneev SCP</h1>
+    <p>Développeur & Créateur de contenu</p>
+    <a href="#projects" class="btn">Voir mes projets</a>
+    <a href="#videos" class="btn">Voir mes vidéos</a>
+    <a href="#addons" class="btn">Voir mes addons GMod</a>
+</header>
+<section id="about">
+    <h2>À propos</h2>
+    <p>
+        Bonjour ! Je suis Korneev SCP, d'origine russe, j'ai 22 ans et je suis né en 2003.  
+        Passionné par le développement, la cybersécurité et la création de contenu, je programme en <strong>C, Python, HTML, CSS, PHP, Bash, JavaScript et GLua</strong>.  
+        Je maîtrise plusieurs systèmes d’exploitation comme <strong>Linux Serveur, Parrot, Kali Linux, Arch Linux et Windows Serveur</strong>.  
+        Je m’entraîne également avec <strong>Packet Tracer</strong> et je sais configurer des <strong>switches, VLANs, routeurs, tours centrales, téléphones IP, caméras</strong>, etc.  
+        Je partage mes projets sur GitHub, mes vidéos sur YouTube et des addons pour Garry’s Mod.
+    </p>
+</section>
+<section id="projects">
+    <h2>Projets GitHub</h2>
+    <div class="projects">
+        <div class="card">
+            <h3>Système de Détection d'Intrusion (IDS) pour Windows</h3>
+            <p>Programme développé en C pour Windows. Surveille en temps réel votre ordinateur et alerte via des popups Windows en cas d'activités suspectes.</p>
+            <a href="https://github.com/korneevscp/windows-d-tection-intrusion-" class="btn" target="_blank">Voir sur GitHub</a>
+        </div>
+        <div class="card">
+            <h3>FBS-Console – Terminal de Maintenance Windows</h3>
+            <p>Script .bat interactif pour maintenance et optimisation de Windows 10/11. Menu principal avec nettoyage, optimisation, informations système et journalisation.</p>
+            <a href="https://github.com/korneevscp/FSB_Consol_BAT_OPTIMISATION_WINDOSE" class="btn" target="_blank">Voir sur GitHub</a>
+        </div>
+        <div class="card">
+            <h3>NEXORA – Test de réseau social</h3>
+            <p>Projet réalisé dans le cadre de Holberton School pour obtenir le diplôme RNCP. Il s'agit d'un test de réseau social complet avec fonctionnalités de base.</p>
+            <a href="https://github.com/korneevscp/NEXORA" class="btn" target="_blank">Voir sur GitHub</a>
+        </div>
+    </div>
+</section>
+<section id="videos">
+    <h2>Vidéos YouTube</h2>
+    <div class="videos">
+        <div class="card">
+            <h3>E.I.T objectif faire explosé un site SCP</h3>
+            <iframe width="100%" height="200" src="https://www.youtube.com/embed/UflGBg78Gqo" frameborder="0" allowfullscreen></iframe>
+        </div>
+        <div class="card">
+            <h3>Bienvenue chez les Classe D</h3>
+            <iframe width="100%" height="200" src="https://www.youtube.com/embed/ExPp54an0CA" frameborder="0" allowfullscreen></iframe>
+        </div>
+    </div>
+</section>
+<section id="addons">
+    <h2>Addons Garry’s Mod</h2>
+    <div class="addons">
+        <div class="card">
+            <h3>Crosshair Disabled Module</h3>
+            <p>Désactive complètement le crosshair (réticule) pour toutes les armes dans Garry’s Mod, y compris les systèmes personnalisés.</p>
+            <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=3532830228" class="btn" target="_blank">Voir sur Steam Workshop</a>
+        </div>
+        <div class="card">
+            <h3>Interactive Armory NPC</h3>
+            <p>Ajoute un NPC Armory interactif (DarkRP compatible) avec menu noir et cyan accessible via [E].</p>
+            <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=3592956618" class="btn" target="_blank">Voir sur Steam Workshop</a>
+        </div>
+        <div class="card">
+            <h3>Class-D Contract System</h3>
+            <p>Système de contrat pour SCP-RP. Chaque nouveau détenu Classe-D doit signer un contrat avant d’obtenir son identifiant unique.</p>
+            <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=3532930188" class="btn" target="_blank">Voir sur Steam Workshop</a>
+        </div>
+    </div>
+</section>
+<section id="music">
+    <h2>Musiques préférées</h2>
+    <div class="music-cards">
+        <div class="music-card">
+            <h3>Might Just Crash (US)</h3>
+            <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/track/3Soa2dYUNBQt0CsHf1jKP1?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+        </div>
+        <div class="music-card">
+            <h3>ay (RU)</h3>
+            <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/track/1TpuljmgsIlP4e1XMelHa4?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+        </div>
+        <div class="music-card">
+            <h3>BATMAN (remaster US)</h3>
+            <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/track/7bLVmD6uHlcMRKti9KUz9M?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+        </div>
+        <div class="music-card">
+            <h3>Russian Music (RU)</h3>
+            <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/track/5d23PwqtjNXNOOkC1fkfDp?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+        </div>
+        <div class="music-card">
+            <h3>Prémices Sakage (FR)</h3>
+            <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/track/2SHnP314rhUlEmvcQ7SPVa?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+        </div>
+        <div class="music-card">
+            <h3>Bouteille à La Saine TSR Crew (FR)</h3>
+            <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/track/5Kh5DkX5DtP6iB2F3cvHSK?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+        </div>
+    </div>
+</section>
+<section id="contact">
+    <h2>Contact</h2>
+    <div class="contact">
+        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=anssi.xo1.exe@gmail.com" target="_blank" class="btn">Email</a>
+        <a href="https://github.com/korneevscp" target="_blank" class="btn">GitHub</a>
+        <a href="https://www.youtube.com/channel/UC7tDpnAkFrGm6TDjAP9GNSA" target="_blank" class="btn">YouTube</a>
+    </div>
+</section>
+<footer>
+    © 2025 Korneev SCP
+</footer>
+</body>
+</html>
