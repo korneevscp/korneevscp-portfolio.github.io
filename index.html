@@ -34,10 +34,27 @@ header p{color:#66ffff;margin-bottom:30px}
     margin-left: 10px;
     vertical-align: middle;
 }
+.badge-new {
+    background-color: #00ff00; 
+    color: #0f0f0f;
+    padding: 5px 10px;
+    font-size: .8rem;
+    font-weight: bold;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0,255,0,.8);
+    animation: pulse-new 2s infinite ease-in-out;
+    margin-left: 10px;
+    vertical-align: middle;
+}
 @keyframes pulse-orange {
     0% { box-shadow: 0 0 10px rgba(255,140,0,.7); transform: scale(1); }
     50% { box-shadow: 0 0 25px rgba(255,140,0,1); transform: scale(1.05); }
     100% { box-shadow: 0 0 10px rgba(255,140,0,.7); transform: scale(1); }
+}
+@keyframes pulse-new {
+    0% { box-shadow: 0 0 10px rgba(0,255,0,.7); transform: scale(1); }
+    50% { box-shadow: 0 0 25px rgba(0,255,0,1); transform: scale(1.05); }
+    100% { box-shadow: 0 0 10px rgba(0,255,0,.7); transform: scale(1); }
 }
 .card.en-cours:hover{box-shadow:0 0 30px rgba(0,255,247,.08);border-left-color:#00c8c8}
 .card-footer{display:flex;align-items:center;margin-top:auto}
@@ -78,7 +95,7 @@ footer{text-align:center;padding:20px;font-size:.9rem;color:#555}
     <h2>Projets GitHub</h2>
     <div class="projects">
         <div class="card">
-            <h3>ShadowWatch – Surveillance de données</h3>
+            <h3>ShadowWatch <span class="badge-new">NEW</span></h3>
             <p>Surveillance automatique de tes données personnelles sur le web et le darknet. Alerte par email et Dashboard local. 100% gratuit et Open-source.</p>
             <a href="https://github.com/korneevscp/shadowwatch" class="btn" target="_blank">Voir sur GitHub</a>
         </div>
@@ -151,7 +168,7 @@ footer{text-align:center;padding:20px;font-size:.9rem;color:#555}
     <h2>Addons Garry’s Mod</h2>
     <div class="addons">
         <div class="card">
-            <h3>Bravo Dispatch System</h3>
+            <h3>Bravo Dispatch System <span class="badge-new">NEW</span></h3>
             <p>Gestion d'unités en temps réel : interface !root, Drag & Drop, indicateurs HUD 3D et notifications pour une coordination parfaite des commandants.</p>
             <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=3647023558" class="btn" target="_blank">Voir sur Steam Workshop</a>
         </div>
@@ -215,6 +232,6 @@ footer{text-align:center;padding:20px;font-size:.9rem;color:#555}
     </div>
 </section>
 
-<footer>© 2025 Korneev SCP</footer>
+<footer>© 2026 Korneev SCP</footer>
 </body>
 </html>
