@@ -283,13 +283,11 @@ footer{text-align:center;padding:20px;font-size:.9rem;color:#555}
 
         for (let i = 0; i < drops.length; i++) {
             const text = charArray[Math.floor(Math.random() * charArray.length)];
-            
             ctx.fillText(text, i * fontSize, drops[i] * fontSize);
 
             if (drops[i] * fontSize > canvas.width && Math.random() > 0.975) {
                 drops[i] = 0;
             }
-
             drops[i]++;
         }
     }
