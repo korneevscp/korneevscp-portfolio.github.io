@@ -2,6 +2,7 @@ const user="korneevscp";
 
 async function github(endpoint){
  const r=await fetch(`https://api.github.com/${endpoint}`);
+ if(!r.ok) throw new Error(`GitHub API: ${r.status}`);
  return r.json();
 }
 
@@ -31,8 +32,10 @@ async function loadRepos(){
 async function loadProject(){
  const name=new URLSearchParams(location.search).get("repo");
  if(!name)return;
- const r=await github(`repos/${user}/${name}`);
- document.getElementById("project").innerHTML=`
+ const readme=document.getElementById("readme");
+ try {
+  const r=await github(`repos/${user}/${encodeURIComponent(name)}`);
+  document.getElementById("project").innerHTML=`
  <div class="card">
  <h1>${r.name}</h1>
  <p>${r.description||""}</p>
@@ -40,9 +43,19 @@ async function loadProject(){
  <span class="tag">⭐ ${r.stargazers_count}</span>
  <span class="tag">🍴 ${r.forks_count}</span>
  <p>Dernière mise à jour : ${new Date(r.updated_at).toLocaleDateString()}</p>
- <a href="${r.html_url}" target="_blank">Voir le code GitHub</a>
+ <a href="${r.html_url}" target="_blank" rel="noopener noreferrer">Voir le code GitHub</a>
  </div>`;
- const read=await fetch(`https://raw.githubusercontent.com/${user}/${name}/main/README.md`);
- if(read.ok) document.getElementById("readme").innerText=await read.text();
+  const response=await fetch(`https://raw.githubusercontent.com/${user}/${encodeURIComponent(name)}/${encodeURIComponent(r.default_branch)}/README.md`);
+  if(!response.ok) throw new Error("README introuvable");
+  const markdown=await response.text();
+  if(window.marked && window.DOMPurify){
+   readme.innerHTML=DOMPurify.sanitize(marked.parse(markdown));
+  } else {
+   readme.textContent=markdown;
+  }
+ } catch(error) {
+  if(readme) readme.textContent="Impossible de charger le README de ce projet.";
+  console.error(error);
+ }
 }
 loadProfile();loadRepos();loadProject();
