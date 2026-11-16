@@ -297,3 +297,11 @@ body{width:100%;min-width:320px;min-height:100vh;overflow-x:hidden}
 
 .music-player__skip{width:32px;height:32px;padding:0;border:1px solid #244859;border-radius:50%;background:#09141e;color:#99ddec;font-size:18px;line-height:1;cursor:pointer}
 .music-player__skip:hover{border-color:#00d9ff;color:#8af5ff}
+
+/* Give touch screens an immediate cyberpunk press animation */
+@media(hover:none) and (pointer:coarse){
+ .cybr-btn{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+ .cybr-btn:active{background:#087f91;color:#fff;filter:brightness(1.2);transform:translate(2px,0);box-shadow:0 0 18px #00d9ff77}
+ .cybr-btn:active .cybr-btn__glitch{display:flex;align-items:center;justify-content:center;animation:cybr-glitch .42s steps(1,end) 1}
+ .music-player__play:active,.music-player__skip:active,.commit-notifications__toggle:active,.commit-toast__close:active{transform:scale(.94);filter:brightness(1.35)}
+}
