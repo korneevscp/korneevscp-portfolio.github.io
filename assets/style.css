@@ -21,4 +21,20 @@ button{background:#00bfe8;color:#001018;border:0;padding:12px 20px;border-radius
 .readme th,.readme td{padding:8px 12px;border:1px solid #163042;text-align:left}
 .readme blockquote{padding-left:1em;border-left:3px solid #00d9ff;color:#b8cbd6}
 .readme a{overflow-wrap:anywhere}
+
+/* Introductory fluorescent loading screen */
+.loader-screen{position:fixed;inset:0;z-index:9999;display:grid;place-items:center;overflow:hidden;background:#05070a;transition:opacity .35s ease,visibility .35s ease}
+.loader-screen.is-hidden{opacity:0;visibility:hidden;pointer-events:none}
+.loader-content{width:min(200px,65vw);text-align:center}
+.loader-box{position:relative;width:100%;height:40px;perspective:500px}
+.progressbar{position:absolute;inset:0;transform-style:preserve-3d;transform:rotateX(-20deg) rotateY(-30deg)}
+.loader-side{position:absolute;inset:0;background:rgba(0,217,255,.18)}
+.loader-side.bottom{transform:rotateX(90deg);transform-origin:bottom;box-shadow:10px 10px 50px #0005}
+.loader-side.top{transform:translateY(-100%) rotateX(90deg);transform-origin:bottom}
+.loader-side.back{transform:translateZ(-40px)}
+.loader-side.left{width:40px;transform:rotateY(90deg);transform-origin:left;background:rgba(0,217,255,.6)}
+.loader-fill{width:0;height:100%;background:rgba(0,217,255,.7);box-shadow:0 0 30px rgba(0,217,255,.5);animation:loader-fill 3s linear forwards}
+.loader-label{margin:34px 0 0;color:#e8f7ff;font:700 16px Inter,Arial,sans-serif;letter-spacing:.12em}
+@keyframes loader-fill{to{width:100%}}
 @media(max-width:600px){.container{padding:15px}.card{padding:18px}.grid{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){.loader-screen{transition:none}}
