@@ -233,3 +233,21 @@ body{width:100%;min-width:320px;min-height:100vh;overflow-x:hidden}
  .conversation-device,.chat-bubble{animation:none;transition:none}
  .conversation-device:hover{transform:none}
 }
+
+
+/* Commit notifications restyled as neon info alerts */
+.commit-toast{padding:13px 42px 13px 50px;border:1px solid rgba(6,180,220,.48);border-radius:12px;background:rgba(0,145,190,.12);box-shadow:0 0 8px rgba(0,217,255,.2),0 8px 28px #0008;color:#7ee8ff;text-shadow:1px 1px #00040a;transition:background .35s ease,border-color .35s ease,box-shadow .35s ease}
+.commit-toast:hover{border-color:rgba(6,220,255,.78);background:rgba(0,145,190,.22);box-shadow:0 0 15px rgba(0,217,255,.3),0 8px 28px #0008}
+.commit-toast:before{position:absolute;top:50%;left:15px;inset:auto auto auto 15px;display:grid;width:23px;height:23px;place-items:center;transform:translateY(-50%);border:1px solid #26dfff;border-radius:50%;background:rgba(0,217,255,.12);color:#5fe7ff;content:"i";font-family:Arial,sans-serif;font-size:15px;font-weight:800;text-shadow:none;animation:commit-alert-shake 3.2s ease-in-out infinite}
+.commit-toast:after{position:absolute;top:50%;left:43px;width:2px;height:24px;transform:translateY(-50%);border-left:1px solid rgba(83,222,255,.38);border-right:1px solid rgba(83,222,255,.2);border-radius:2px;content:""}
+.commit-toast h3{color:#a7f1ff;font-size:.88rem;text-shadow:1px 1px #00040a}
+.commit-toast__repo{color:#77ddff}
+.commit-toast__repo:hover{color:#fff;text-decoration:underline}
+.commit-toast__date{color:#9aafbd}
+.commit-toast__close{top:9px;right:10px;width:25px;height:25px;border:0;border-radius:50%;background:transparent;color:#4de2ff;font-size:1.2rem;opacity:.78;transition:background .25s ease,color .25s ease,opacity .25s ease}
+.commit-toast__close:hover,.commit-toast__close:focus-visible{border:0;background:#04bcd966;color:#fff;opacity:1}
+.commit-toast__close:focus-visible{outline:2px solid #79e6ff;outline-offset:2px}
+.commit-notifications__loading,.commit-notifications__empty{border-color:rgba(6,180,220,.48);background:rgba(0,145,190,.1);box-shadow:0 0 8px rgba(0,217,255,.16),0 8px 28px #0008;color:#9beaff;text-shadow:1px 1px #00040a}
+@keyframes commit-alert-shake{0%,82%,100%{transform:translateY(-50%) rotate(0)}86%{transform:translateY(-50%) rotate(-9deg)}90%{transform:translateY(-50%) rotate(9deg)}94%{transform:translateY(-50%) rotate(-5deg)}}
+@media(prefers-reduced-motion:reduce){.commit-toast:before{animation:none}}
+@media(max-width:600px){.commit-toast{padding:11px 37px 11px 47px}.commit-toast:before{left:13px}.commit-toast:after{left:40px}}
