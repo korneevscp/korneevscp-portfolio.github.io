@@ -83,16 +83,29 @@ async function loadProfile(){
  el.innerHTML=`<div class="card"><h2>GitHub</h2><p>${p.bio||"Développeur cybersécurité"}</p><p>👥 ${p.followers} followers • 📦 ${p.public_repos} repositories</p></div>`;
 }
 
+function escapeHtml(value){
+ return String(value).replace(/[&<>"']/g,char=>{
+  if(char==="&")return "&amp;";
+  if(char==="<")return "&lt;";
+  if(char===">")return "&gt;";
+  if(char==='"')return "&quot;";
+  return "&#39;";
+ });
+}
+
 async function loadRepos(){
  const box=document.getElementById("repos");
  if(!box)return;
  const repos=await github(`users/${user}/repos?sort=updated&per_page=100`);
- box.innerHTML=repos.map(r=>`
- <div class="card">
+ box.innerHTML=repos.map(r=>{
+  const tags=[...new Set([r.language,...(Array.isArray(r.topics)?r.topics:[])].filter(Boolean))].slice(0,5);
+  if(!tags.length)tags.push("Projet GitHub");
+  return `
+ <div class="card project-card">
  <h3>${r.name}</h3>
  <p>${r.description||"Projet open source"}</p>
  <div class="project-tags" aria-label="Langages et sujets du projet">
-  ${[...new Set([r.language,...(Array.isArray(r.topics)?r.topics:[])].filter(Boolean))].slice(0,5).map(tag=>`<span class="project-tag">${String(tag).replace(/[&<>"']/g,char=>({"&":"&amp;","<":"&lt;",">":"&gt;","\\"":"&quot;","'":"&#39;"}[char]))}</span>`).join("")}
+  ${tags.map(tag=>`<span class="project-tag">${escapeHtml(tag)}</span>`).join("")}
  </div>
  <div class="project-stats"><span class="tag">⭐ ${r.stargazers_count}</span><span class="tag">🍴 ${r.forks_count}</span></div>
  <p>${new Date(r.updated_at).toLocaleDateString()}</p>
@@ -101,7 +114,8 @@ async function loadRepos(){
    <span aria-hidden="true" class="cybr-btn__glitch">Voir le projet_</span>
    <span aria-hidden="true" class="cybr-btn__tag">R25</span>
  </a>
- </div>`).join("");
+ </div>`;
+ }).join("");
 }
 
 async function loadProject(){
