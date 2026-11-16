@@ -1,1 +1,38 @@
-<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Projet GitHub</title><link rel="stylesheet" href="assets/style.css"></head><body><main class="container"><a href="index.html">← Retour</a><div id="project"></div><section class="card readme-card"><h2>README</h2><article id="readme" class="readme" aria-live="polite">Chargement du README…</article></section></main><script src="https://cdn.jsdelivr.net/npm/marked@15.0.7/marked.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/dompurify@3.2.6/dist/purify.min.js" defer></script><script src="assets/app.js" defer></script></body></html>
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Conversation sur un projet GitHub</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <main class="container project-page">
+    <a class="project-back" href="index.html">← Retour au portfolio</a>
+    <section class="card project-card conversation-device" aria-label="Conversation au sujet du projet">
+      <div class="conversation-header">
+        <img src="https://github.com/korneevscp.png" alt="" class="conversation-avatar">
+        <div class="conversation-contact">
+          <strong id="chat-project-name">Projet GitHub</strong>
+          <span><i aria-hidden="true"></i> Discussion du projet</span>
+        </div>
+        <a class="conversation-github" id="project-github-link" href="https://github.com/korneevscp" target="_blank" rel="noopener noreferrer" aria-label="Ouvrir le projet sur GitHub">↗</a>
+      </div>
+      <div class="chat-messages" id="project" aria-live="polite">
+        <p class="chat-bubble chat-bubble--received">Chargement du projet…</p>
+      </div>
+      <article class="chat-bubble chat-bubble--received readme-message">
+        <p class="chat-message-label">DOCUMENT PARTAGÉ</p>
+        <h2>README</h2>
+        <div id="readme" class="readme" aria-live="polite">Chargement du README…</div>
+      </article>
+      <div class="chat-compose" aria-hidden="true">
+        <span>Conversation du projet</span><span class="chat-compose-icon">↗</span>
+      </div>
+    </section>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/marked@15.0.7/marked.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/dompurify@3.2.6/dist/purify.min.js" defer></script>
+  <script src="assets/app.js" defer></script>
+</body>
+</html>
