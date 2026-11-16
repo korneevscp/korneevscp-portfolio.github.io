@@ -254,3 +254,22 @@ body{width:100%;min-width:320px;min-height:100vh;overflow-x:hidden}
 
 .commit-toast:before{inset:initial;top:50%;left:15px}
 @media(max-width:600px){.commit-toast:before{left:13px}}
+
+
+/* Keep the commit alert list from covering the mobile profile */
+.commit-notifications{gap:5px;overflow:hidden}
+.commit-notifications__toggle{display:flex;align-items:center;gap:8px;width:100%;padding:8px 10px;border:1px solid rgba(6,180,220,.48);border-radius:11px;background:rgba(5,16,25,.94);color:#7ee8ff;font:700 .74rem/1.2 Inter,Arial,sans-serif;letter-spacing:.07em;text-align:left;text-shadow:1px 1px #00040a;cursor:pointer;box-shadow:0 4px 16px #0006;transition:background .2s ease,border-color .2s ease}
+.commit-notifications__toggle:before{content:"ⓘ";display:inline-grid;flex:none;width:22px;height:22px;place-items:center;border:1px solid #26dfff;border-radius:50%;font-size:.8rem}
+.commit-notifications__toggle:hover,.commit-notifications__toggle:focus-visible{border-color:#35dfff;background:rgba(0,145,190,.24);color:#c4f7ff}
+.commit-notifications__toggle:focus-visible{outline:2px solid #79e6ff;outline-offset:2px}
+.commit-notifications__list{display:flex;min-height:0;flex-direction:column;gap:9px;overflow-y:auto}
+.commit-notifications.is-expanded .commit-notifications__list{max-height:calc(min(62vh,580px) - 44px)}
+.commit-notifications:not(.is-expanded) .commit-notifications__list{display:none}
+@media(max-width:600px){
+ .commit-notifications{top:10px;left:10px;width:auto;max-height:none;overflow:visible;gap:0;padding:0}
+ .commit-notifications__toggle{width:auto;max-width:calc(100vw - 20px);padding:7px 10px;font-size:.7rem}
+ .commit-notifications.is-expanded{width:calc(100vw - 20px);max-height:38vh;overflow:hidden;gap:6px;padding:3px;background:rgba(5,10,16,.84);border:1px solid #1c485a;border-radius:13px;box-shadow:0 8px 28px #0008}
+ .commit-notifications.is-expanded .commit-notifications__list{max-height:calc(38vh - 48px)}
+ .commit-notifications.is-expanded .commit-notifications__toggle{width:100%}
+ .commit-notifications__list{gap:7px}
+}
