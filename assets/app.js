@@ -173,10 +173,30 @@ async function loadProject(){
 async function loadCommitNotifications(){
  const panel=document.createElement("aside");
  panel.className="commit-notifications";
+ panel.id="commit-notifications";
  panel.setAttribute("aria-label","Commits publics des quatre derniers jours");
  panel.setAttribute("aria-live","polite");
- panel.innerHTML='<p class="commit-notifications__loading">Chargement des commits récents…</p>';
+ if(!window.matchMedia("(max-width: 600px)").matches)panel.classList.add("is-expanded");
  document.body.append(panel);
+ const makeToggle=(label)=>{
+  const button=document.createElement("button");
+  button.className="commit-notifications__toggle";
+  button.type="button";
+  button.setAttribute("aria-controls","commit-notifications-list");
+  button.setAttribute("aria-expanded",panel.classList.contains("is-expanded")?"true":"false");
+  button.textContent=label;
+  button.addEventListener("click",()=>{
+   const expanded=panel.classList.toggle("is-expanded");
+   button.setAttribute("aria-expanded",expanded?"true":"false");
+  });
+  return button;
+ };
+ const toggle=makeToggle("Commits · …");
+ const list=document.createElement("div");
+ list.className="commit-notifications__list";
+ list.id="commit-notifications-list";
+ list.innerHTML='<p class="commit-notifications__loading">Chargement des commits récents…</p>';
+ panel.append(toggle,list);
  try{
   const cutoff=Date.now()-4*24*60*60*1000;
   const since=new Date(cutoff).toISOString().slice(0,10);
@@ -190,18 +210,15 @@ async function loadCommitNotifications(){
    message:(item.commit?.message||"Commit sans message").split("\n")[0],
    date:item.commit?.author?.date||item.commit?.committer?.date
   })).filter(commit=>commit.sha&&commit.date&&new Date(commit.date).getTime()>=cutoff);
-  panel.replaceChildren();
+  list.replaceChildren();
+  toggle.textContent=`Commits récents · ${commits.length}`;
   if(!commits.length){
    const empty=document.createElement("p");
    empty.className="commit-notifications__empty";
    empty.textContent="Aucun commit public récent associé à ce profil. Les contributions privées du graphique GitHub ne publient pas leur message.";
-   panel.append(empty);
+   list.append(empty);
    return;
   }
-  const heading=document.createElement("h2");
-  heading.className="commit-notifications__title";
-  heading.textContent="Commits récents · 4 jours";
-  panel.append(heading);
   for(const commit of commits){
    const item=document.createElement("article");
    item.className="commit-toast";
@@ -224,14 +241,15 @@ async function loadCommitNotifications(){
    date.dateTime=commit.date;
    date.textContent=new Date(commit.date).toLocaleString("fr-FR",{day:"2-digit",month:"short",hour:"2-digit",minute:"2-digit"});
    item.append(close,title,link,date);
-   panel.append(item);
+   list.append(item);
   }
  }catch(error){
-  panel.replaceChildren();
+  list.replaceChildren();
+  toggle.textContent="Commits récents · indisponibles";
   const unavailable=document.createElement("p");
   unavailable.className="commit-notifications__empty";
   unavailable.textContent="Les commits récents sont momentanément indisponibles.";
-  panel.append(unavailable);
+  list.append(unavailable);
   console.error(error);
  }
 }
