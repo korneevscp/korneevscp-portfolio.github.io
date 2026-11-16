@@ -209,7 +209,7 @@ async function loadCommitNotifications(){
    repo:item.repository?.full_name||user,
    message:(item.commit?.message||"Commit sans message").split("\n")[0],
    date:item.commit?.author?.date||item.commit?.committer?.date
-  })).filter(commit=>commit.sha&&commit.date&&new Date(commit.date).getTime()>=cutoff);
+  })).filter(commit=>commit.sha&&commit.date&&new Date(commit.date).getTime()>=cutoff).slice(0,5);
   list.replaceChildren();
   toggle.textContent=`Commits récents · ${commits.length}`;
   if(!commits.length){
@@ -298,15 +298,12 @@ function initMusicPlayer(){
  audio.addEventListener("ended",()=>{setStatus("Morceau terminé");syncPlayback()});
  audio.addEventListener("error",()=>setStatus("Impossible de charger le fichier audio."));
  audio.volume=Number(volume.value);
- const browserLanguage=(navigator.language||"").toLowerCase();
- if(/^en(?:-|$)/.test(browserLanguage)){
-  setStatus("Tentative de lecture automatique…");
-  audio.play().then(()=>setStatus("Lecture en cours")).catch(()=>{
-   setStatus("Lecture automatique bloquée : appuyez sur Lecture.");
-  });
- }else{
-  setStatus("Appuyez sur Lecture pour écouter.");
- }
+ document.getElementById("music-back").addEventListener("click",()=>{audio.currentTime=Math.max(0,audio.currentTime-10)});
+ document.getElementById("music-forward").addEventListener("click",()=>{audio.currentTime=Math.min(audio.duration||audio.currentTime+10,audio.currentTime+10)});
+ setStatus("Tentative de lecture automatique…");
+ audio.play().then(()=>setStatus("Lecture en cours")).catch(()=>{
+  setStatus("Lecture automatique bloquée : appuyez sur Lecture.");
+ });
 }
 
 initNeonBackground();
