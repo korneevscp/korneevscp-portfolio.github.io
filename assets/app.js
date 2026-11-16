@@ -254,6 +254,62 @@ async function loadCommitNotifications(){
  }
 }
 
+
+function initMusicPlayer(){
+ const audio=document.getElementById("portfolio-audio");
+ if(!audio)return;
+ const playButton=document.getElementById("music-play");
+ const seek=document.getElementById("music-seek");
+ const currentTime=document.getElementById("music-current-time");
+ const duration=document.getElementById("music-duration");
+ const status=document.getElementById("music-status");
+ const volume=document.getElementById("music-volume");
+ const formatTime=value=>{
+  if(!Number.isFinite(value))return "0:00";
+  const seconds=Math.floor(value);
+  return Math.floor(seconds/60)+":"+String(seconds%60).padStart(2,"0");
+ };
+ const setStatus=message=>{status.textContent=message};
+ const syncPlayback=()=>{
+  const playing=!audio.paused;
+  playButton.textContent=playing?"Ⅱ":"▶";
+  playButton.setAttribute("aria-label",playing?"Mettre en pause":"Lire le morceau");
+  audio.closest(".music-player").classList.toggle("is-playing",playing);
+ };
+ playButton.addEventListener("click",async()=>{
+  if(audio.paused){
+   try{await audio.play();setStatus("Lecture en cours");}
+   catch(error){setStatus("Lecture bloquée : appuyez à nouveau sur Lecture.");}
+  }else{audio.pause();setStatus("Lecture en pause");}
+ });
+ audio.addEventListener("play",syncPlayback);
+ audio.addEventListener("pause",syncPlayback);
+ audio.addEventListener("loadedmetadata",()=>{
+  duration.textContent=formatTime(audio.duration);
+  seek.max=String(Math.floor(audio.duration)||100);
+  setStatus("Prêt à écouter");
+ });
+ audio.addEventListener("timeupdate",()=>{
+  currentTime.textContent=formatTime(audio.currentTime);
+  seek.value=String(Math.floor(audio.currentTime));
+ });
+ seek.addEventListener("input",()=>{audio.currentTime=Number(seek.value)});
+ volume.addEventListener("input",()=>{audio.volume=Number(volume.value)});
+ audio.addEventListener("ended",()=>{setStatus("Morceau terminé");syncPlayback()});
+ audio.addEventListener("error",()=>setStatus("Impossible de charger le fichier audio."));
+ audio.volume=Number(volume.value);
+ const browserLanguage=(navigator.language||"").toLowerCase();
+ if(/^en(?:-|$)/.test(browserLanguage)){
+  setStatus("Tentative de lecture automatique…");
+  audio.play().then(()=>setStatus("Lecture en cours")).catch(()=>{
+   setStatus("Lecture automatique bloquée : appuyez sur Lecture.");
+  });
+ }else{
+  setStatus("Appuyez sur Lecture pour écouter.");
+ }
+}
+
 initNeonBackground();
+initMusicPlayer();
 loadProfile();loadRepos();loadProject();
 if(!document.body.classList.contains("project-detail-page"))loadCommitNotifications();
