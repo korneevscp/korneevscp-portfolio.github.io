@@ -121,29 +121,51 @@ async function loadRepos(){
 async function loadProject(){
  const name=new URLSearchParams(location.search).get("repo");
  if(!name)return;
+ const project=document.getElementById("project");
  const readme=document.getElementById("readme");
  try {
   const r=await github(`repos/${user}/${encodeURIComponent(name)}`);
-  document.getElementById("project").innerHTML=`
- <div class="card">
- <h1>${r.name}</h1>
- <p>${r.description||""}</p>
- <span class="tag">${r.language||"N/A"}</span>
- <span class="tag">⭐ ${r.stargazers_count}</span>
- <span class="tag">🍴 ${r.forks_count}</span>
- <p>Dernière mise à jour : ${new Date(r.updated_at).toLocaleDateString()}</p>
- <a href="${r.html_url}" target="_blank" rel="noopener noreferrer">Voir le code GitHub</a>
- </div>`;
+  const title=document.getElementById("chat-project-name");
+  const githubLink=document.getElementById("project-github-link");
+  if(title)title.textContent=r.name;
+  if(githubLink)githubLink.href=r.html_url;
+  document.title=`${r.name} · Portfolio`;
+  const tags=[...new Set([r.language,...(Array.isArray(r.topics)?r.topics:[])].filter(Boolean))].slice(0,5);
+  project.innerHTML=`
+   <article class="chat-bubble chat-bubble--received">
+    <p class="chat-message-label">PROJET · PRÉSENTATION</p>
+    <h1>${escapeHtml(r.name)}</h1>
+    <p>${escapeHtml(r.description||"Projet open source de korneevscp.")}</p>
+    <time class="chat-message-time" datetime="${r.updated_at}">Mis à jour le ${new Date(r.updated_at).toLocaleDateString("fr-FR")}</time>
+   </article>
+   <article class="chat-bubble chat-bubble--sent">
+    <p class="chat-message-label">TECHNOLOGIES &amp; SUJETS</p>
+    <div class="project-tags" aria-label="Langages et sujets du projet">
+     ${tags.length?tags.map(tag=>`<span class="project-tag">${escapeHtml(tag)}</span>`).join(""):'<span class="project-tag">Projet GitHub</span>'}
+    </div>
+    <p class="chat-project-stats">⭐ ${r.stargazers_count} étoiles <span>·</span> 🍴 ${r.forks_count} forks</p>
+   </article>
+   <article class="chat-bubble chat-bubble--received">
+    <p class="chat-message-label">LIEN DU DÉPÔT</p>
+    <p>Le code et les fichiers du projet sont disponibles ici :</p>
+    <a class="chat-code-link" href="${r.html_url}" target="_blank" rel="noopener noreferrer">Ouvrir sur GitHub <span aria-hidden="true">↗</span></a>
+   </article>`;
   const response=await fetch(`https://raw.githubusercontent.com/${user}/${encodeURIComponent(name)}/${encodeURIComponent(r.default_branch)}/README.md`);
-  if(!response.ok) throw new Error("README introuvable");
+  if(!response.ok)throw new Error("README introuvable");
   const markdown=await response.text();
-  if(window.marked && window.DOMPurify){
+  if(window.marked&&window.DOMPurify){
    readme.innerHTML=DOMPurify.sanitize(marked.parse(markdown));
-  } else {
+  }else{
    readme.textContent=markdown;
   }
- } catch(error) {
-  if(readme) readme.textContent="Impossible de charger le README de ce projet.";
+ }catch(error){
+  if(readme)readme.textContent="Impossible de charger le README de ce projet.";
+  if(project&&!project.children.length){
+   const message=document.createElement("p");
+   message.className="chat-bubble chat-bubble--received";
+   message.textContent="Impossible de charger les informations du projet.";
+   project.append(message);
+  }
   console.error(error);
  }
 }
