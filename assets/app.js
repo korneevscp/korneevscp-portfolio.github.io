@@ -25,7 +25,11 @@ async function loadRepos(){
  <span class="tag">⭐ ${r.stargazers_count}</span>
  <span class="tag">🍴 ${r.forks_count}</span>
  <p>${new Date(r.updated_at).toLocaleDateString()}</p>
- <a href="project.html?repo=${encodeURIComponent(r.name)}">Voir le projet →</a>
+ <a class="cybr-btn" href="project.html?repo=${encodeURIComponent(r.name)}">
+   Voir le projet<span aria-hidden="true">_</span>
+   <span aria-hidden="true" class="cybr-btn__glitch">Voir le projet_</span>
+   <span aria-hidden="true" class="cybr-btn__tag">R25</span>
+ </a>
  </div>`).join("");
 }
 
