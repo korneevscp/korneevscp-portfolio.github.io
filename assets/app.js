@@ -98,7 +98,7 @@ async function loadRepos(){
  if(!box)return;
  const repos=await github(`users/${user}/repos?sort=updated&per_page=100`);
  box.innerHTML=repos.map(r=>{
-  const tags=[...new Set([r.language,...(Array.isArray(r.topics)?r.topics:[])].filter(Boolean))].slice(0,3);
+  const tags=[...new Set([r.language,...(Array.isArray(r.topics)?r.topics:[])].filter(Boolean))].slice(0,5);
   if(!tags.length)tags.push("Projet GitHub");
   return `
  <div class="card project-card">
@@ -209,7 +209,7 @@ async function loadCommitNotifications(){
    repo:item.repository?.full_name||user,
    message:(item.commit?.message||"Commit sans message").split("\n")[0],
    date:item.commit?.author?.date||item.commit?.committer?.date
-  })).filter(commit=>commit.sha&&commit.date&&new Date(commit.date).getTime()>=cutoff).slice(0,5);
+  })).filter(commit=>commit.sha&&commit.date&&new Date(commit.date).getTime()>=cutoff).slice(0,3);
   list.replaceChildren();
   toggle.textContent=`Commits récents · ${commits.length}`;
   if(!commits.length){
