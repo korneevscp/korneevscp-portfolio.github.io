@@ -251,3 +251,6 @@ body{width:100%;min-width:320px;min-height:100vh;overflow-x:hidden}
 @keyframes commit-alert-shake{0%,82%,100%{transform:translateY(-50%) rotate(0)}86%{transform:translateY(-50%) rotate(-9deg)}90%{transform:translateY(-50%) rotate(9deg)}94%{transform:translateY(-50%) rotate(-5deg)}}
 @media(prefers-reduced-motion:reduce){.commit-toast:before{animation:none}}
 @media(max-width:600px){.commit-toast{padding:11px 37px 11px 47px}.commit-toast:before{left:13px}.commit-toast:after{left:40px}}
+
+.commit-toast:before{inset:initial;top:50%;left:15px}
+@media(max-width:600px){.commit-toast:before{left:13px}}
