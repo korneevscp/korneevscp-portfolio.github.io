@@ -178,31 +178,29 @@ async function loadCommitNotifications(){
  panel.innerHTML='<p class="commit-notifications__loading">Chargement des commits récents…</p>';
  document.body.append(panel);
  try{
-  const events=await github(`users/${user}/events/public?per_page=100`);
   const cutoff=Date.now()-4*24*60*60*1000;
-  const commits=[];
-  const seen=new Set();
-  for(const event of events){
-   if(event.type!=="PushEvent"||!event.created_at||new Date(event.created_at).getTime()<cutoff)continue;
-   const repo=event.repo?.name||user;
-   for(const commit of event.payload?.commits||[]){
-    if(!commit.sha||seen.has(commit.sha))continue;
-    seen.add(commit.sha);
-    commits.push({sha:commit.sha,repo,message:(commit.message||"Commit sans message").split("\n")[0],date:event.created_at});
-   }
-  }
-  commits.sort((a,b)=>new Date(b.date)-new Date(a.date));
+  const since=new Date(cutoff).toISOString().slice(0,10);
+  const query=new URLSearchParams({q:`author:${user} committer-date:>=${since}`,sort:"committer-date",order:"desc",per_page:"100"});
+  const response=await fetch(`https://api.github.com/search/commits?${query}`,{headers:{Accept:"application/vnd.github+json"}});
+  if(!response.ok)throw new Error(`GitHub commit search: ${response.status}`);
+  const result=await response.json();
+  const commits=(result.items||[]).map(item=>({
+   sha:item.sha,
+   repo:item.repository?.full_name||user,
+   message:(item.commit?.message||"Commit sans message").split("\n")[0],
+   date:item.commit?.author?.date||item.commit?.committer?.date
+  })).filter(commit=>commit.sha&&commit.date&&new Date(commit.date).getTime()>=cutoff);
   panel.replaceChildren();
   if(!commits.length){
    const empty=document.createElement("p");
    empty.className="commit-notifications__empty";
-   empty.textContent="Aucun commit public récent.";
+   empty.textContent="Aucun commit public récent associé à ce profil. Les contributions privées du graphique GitHub ne publient pas leur message.";
    panel.append(empty);
    return;
   }
   const heading=document.createElement("h2");
   heading.className="commit-notifications__title";
-  heading.textContent="Commits récents";
+  heading.textContent="Commits récents · 4 jours";
   panel.append(heading);
   for(const commit of commits){
    const item=document.createElement("article");
