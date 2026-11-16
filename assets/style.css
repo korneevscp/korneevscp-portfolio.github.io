@@ -294,3 +294,6 @@ body{width:100%;min-width:320px;min-height:100vh;overflow-x:hidden}
 @keyframes music-spin{to{transform:rotate(360deg)}}
 @media(max-width:560px){.music-player{gap:14px;margin:0 0 30px;padding:16px}.music-player__art{flex-basis:66px;width:66px;height:66px}.music-player__volume input{width:52px!important}.music-player__status{font-size:.72rem}}
 @media(prefers-reduced-motion:reduce){.music-player.is-playing .music-player__art{animation:none}}
+
+.music-player__skip{width:32px;height:32px;padding:0;border:1px solid #244859;border-radius:50%;background:#09141e;color:#99ddec;font-size:18px;line-height:1;cursor:pointer}
+.music-player__skip:hover{border-color:#00d9ff;color:#8af5ff}
