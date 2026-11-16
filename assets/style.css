@@ -36,5 +36,60 @@ button{background:#00bfe8;color:#001018;border:0;padding:12px 20px;border-radius
 .loader-fill{width:0;height:100%;background:rgba(0,217,255,.7);box-shadow:0 0 30px rgba(0,217,255,.5);animation:loader-fill 3s linear forwards}
 .loader-label{margin:34px 0 0;color:#e8f7ff;font:700 16px Inter,Arial,sans-serif;letter-spacing:.12em}
 @keyframes loader-fill{to{width:100%}}
-@media(max-width:600px){.container{padding:15px}.card{padding:18px}.grid{grid-template-columns:1fr}}
-@media(prefers-reduced-motion:reduce){.loader-screen{transition:none}}
+
+/* Cyberpunk project links */
+.cybr-btn{
+  --primary:hsl(185 100% 34%);
+  --shadow-primary:hsl(180 100% 50%);
+  --shadow-secondary:hsl(60 100% 60%);
+  --color:#fff;
+  --clip:polygon(0 0,100% 0,100% 100%,94% 100%,94% 88%,82% 88%,82% 100%,8% 100%,0 70%);
+  --clip-one:polygon(0 2%,100% 2%,100% 95%,94% 95%,94% 88%,82% 88%,82% 95%,8% 95%,0 70%);
+  --clip-two:polygon(0 78%,100% 78%,100% 100%,94% 100%,94% 88%,82% 88%,82% 100%,8% 100%,0 78%);
+  --clip-three:polygon(0 44%,100% 44%,100% 54%,94% 54%,94% 54%,82% 54%,82% 54%,8% 54%,0 54%);
+  --clip-four:polygon(0 0,100% 0,100% 0,94% 0,94% 0,82% 0,82% 0,8% 0,0 0);
+  --clip-six:polygon(0 40%,100% 40%,100% 85%,94% 85%,94% 85%,82% 85%,82% 85%,8% 85%,0 70%);
+  --clip-seven:polygon(0 63%,100% 63%,100% 80%,94% 80%,94% 80%,82% 80%,82% 80%,8% 80%,0 70%);
+  position:relative;
+  isolation:isolate;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width:150px;
+  min-height:52px;
+  margin-top:8px;
+  padding:0 24px 0 16px;
+  clip-path:var(--clip);
+  background:var(--primary);
+  color:var(--color);
+  font-family:inherit;
+  font-size:14px;
+  font-weight:800;
+  letter-spacing:1.2px;
+  line-height:1.2;
+  text-align:center;
+  text-transform:uppercase;
+  text-decoration:none;
+  transition:background .2s ease,filter .2s ease;
+}
+.cybr-btn:hover,.cybr-btn:focus-visible{background:#087f91;filter:brightness(1.15);color:#fff}
+.cybr-btn:active{filter:brightness(.85)}
+.cybr-btn:focus-visible{outline:2px solid #fff;outline-offset:4px}
+.cybr-btn:before,.cybr-btn:after{position:absolute;inset:0;content:"";clip-path:var(--clip);pointer-events:none}
+.cybr-btn:before{z-index:-2;background:var(--shadow-primary);transform:translate(4px,0)}
+.cybr-btn:after{z-index:-1;background:var(--primary)}
+.cybr-btn__tag{position:absolute;right:5%;bottom:5%;color:#001018;font:700 8px/1 Arial,sans-serif;letter-spacing:1px}
+.cybr-btn__glitch{position:absolute;inset:-4px;z-index:1;display:none;clip-path:var(--clip);background:var(--shadow-primary);color:#fff;text-shadow:2px 2px var(--shadow-primary),-2px -2px var(--shadow-secondary);pointer-events:none}
+.cybr-btn__glitch:before{position:absolute;inset:4px;z-index:-1;content:"";clip-path:var(--clip);background:#087f91}
+.cybr-btn:hover .cybr-btn__glitch,.cybr-btn:focus-visible .cybr-btn__glitch{display:flex;align-items:center;justify-content:center;animation:cybr-glitch 2s infinite}
+@keyframes cybr-glitch{
+  0%,100%{clip-path:var(--clip-four)}
+  2%,8%{clip-path:var(--clip-two);transform:translate(-3%,0)}
+  6%{clip-path:var(--clip-two);transform:translate(3%,0)}
+  10%,13%{clip-path:var(--clip-three);transform:translate(2%,0)}
+  14%,21%{clip-path:var(--clip-four);transform:translate(2%,0)}
+  35%,45%{clip-path:var(--clip-six);transform:translate(-2%,0)}
+  55%,60%{clip-path:var(--clip-seven);transform:translate(2%,0)}
+}
+@media(max-width:600px){.container{padding:15px}.card{padding:18px}.grid{grid-template-columns:1fr}.cybr-btn{min-width:140px}}
+@media(prefers-reduced-motion:reduce){.loader-screen{transition:none}.cybr-btn__glitch{animation:none!important}}
