@@ -98,7 +98,7 @@ async function loadRepos(){
  if(!box)return;
  const repos=await github(`users/${user}/repos?sort=updated&per_page=100`);
  box.innerHTML=repos.map(r=>{
-  const tags=[...new Set([r.language,...(Array.isArray(r.topics)?r.topics:[])].filter(Boolean))].slice(0,5);
+  const tags=[...new Set([r.language,...(Array.isArray(r.topics)?r.topics:[])].filter(Boolean))].slice(0,3);
   if(!tags.length)tags.push("Projet GitHub");
   return `
  <div class="card project-card">
