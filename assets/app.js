@@ -147,5 +147,74 @@ async function loadProject(){
   console.error(error);
  }
 }
+
+async function loadCommitNotifications(){
+ const panel=document.createElement("aside");
+ panel.className="commit-notifications";
+ panel.setAttribute("aria-label","Commits publics des quatre derniers jours");
+ panel.setAttribute("aria-live","polite");
+ panel.innerHTML='<p class="commit-notifications__loading">Chargement des commits récents…</p>';
+ document.body.append(panel);
+ try{
+  const events=await github(`users/${user}/events/public?per_page=100`);
+  const cutoff=Date.now()-4*24*60*60*1000;
+  const commits=[];
+  const seen=new Set();
+  for(const event of events){
+   if(event.type!=="PushEvent"||!event.created_at||new Date(event.created_at).getTime()<cutoff)continue;
+   const repo=event.repo?.name||user;
+   for(const commit of event.payload?.commits||[]){
+    if(!commit.sha||seen.has(commit.sha))continue;
+    seen.add(commit.sha);
+    commits.push({sha:commit.sha,repo,message:(commit.message||"Commit sans message").split("\n")[0],date:event.created_at});
+   }
+  }
+  commits.sort((a,b)=>new Date(b.date)-new Date(a.date));
+  panel.replaceChildren();
+  if(!commits.length){
+   const empty=document.createElement("p");
+   empty.className="commit-notifications__empty";
+   empty.textContent="Aucun commit public récent.";
+   panel.append(empty);
+   return;
+  }
+  const heading=document.createElement("h2");
+  heading.className="commit-notifications__title";
+  heading.textContent="Commits récents";
+  panel.append(heading);
+  for(const commit of commits){
+   const item=document.createElement("article");
+   item.className="commit-toast";
+   const close=document.createElement("button");
+   close.className="commit-toast__close";
+   close.type="button";
+   close.setAttribute("aria-label","Masquer cette notification");
+   close.textContent="×";
+   close.addEventListener("click",()=>item.remove());
+   const title=document.createElement("h3");
+   title.textContent=commit.message;
+   const link=document.createElement("a");
+   link.className="commit-toast__repo";
+   link.href=`https://github.com/${commit.repo}/commit/${encodeURIComponent(commit.sha)}`;
+   link.target="_blank";
+   link.rel="noopener noreferrer";
+   link.textContent=commit.repo;
+   const date=document.createElement("time");
+   date.className="commit-toast__date";
+   date.dateTime=commit.date;
+   date.textContent=new Date(commit.date).toLocaleString("fr-FR",{day:"2-digit",month:"short",hour:"2-digit",minute:"2-digit"});
+   item.append(close,title,link,date);
+   panel.append(item);
+  }
+ }catch(error){
+  panel.replaceChildren();
+  const unavailable=document.createElement("p");
+  unavailable.className="commit-notifications__empty";
+  unavailable.textContent="Les commits récents sont momentanément indisponibles.";
+  panel.append(unavailable);
+  console.error(error);
+ }
+}
+
 initNeonBackground();
-loadProfile();loadRepos();loadProject();
+loadProfile();loadRepos();loadProject();loadCommitNotifications();
