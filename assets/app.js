@@ -91,9 +91,10 @@ async function loadRepos(){
  <div class="card">
  <h3>${r.name}</h3>
  <p>${r.description||"Projet open source"}</p>
- <span class="tag">${r.language||"Code"}</span>
- <span class="tag">⭐ ${r.stargazers_count}</span>
- <span class="tag">🍴 ${r.forks_count}</span>
+ <div class="project-tags" aria-label="Langages et sujets du projet">
+  ${[...new Set([r.language,...(Array.isArray(r.topics)?r.topics:[])].filter(Boolean))].slice(0,5).map(tag=>`<span class="project-tag">${String(tag).replace(/[&<>"']/g,char=>({"&":"&amp;","<":"&lt;",">":"&gt;","\\"":"&quot;","'":"&#39;"}[char]))}</span>`).join("")}
+ </div>
+ <div class="project-stats"><span class="tag">⭐ ${r.stargazers_count}</span><span class="tag">🍴 ${r.forks_count}</span></div>
  <p>${new Date(r.updated_at).toLocaleDateString()}</p>
  <a class="cybr-btn" href="project.html?repo=${encodeURIComponent(r.name)}">
    Voir le projet<span aria-hidden="true">_</span>
