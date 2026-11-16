@@ -38,6 +38,27 @@
     </figure>
   </header>
   <main class="container">
+    <section class="music-player" id="music-player" aria-label="Lecteur audio">
+      <audio id="portfolio-audio" src="assets/KorneevSCP.mp3" preload="metadata"></audio>
+      <div class="music-player__art" aria-hidden="true"><span>♪</span></div>
+      <div class="music-player__content">
+        <p class="music-player__eyebrow">LECTEUR AUDIO</p>
+        <h2>KorneevSCP</h2>
+        <p class="music-player__subtitle">Une piste du portfolio</p>
+        <div class="music-player__timeline">
+          <span id="music-current-time">0:00</span>
+          <input id="music-seek" type="range" min="0" max="100" value="0" aria-label="Position de lecture">
+          <span id="music-duration">0:00</span>
+        </div>
+        <div class="music-player__controls">
+          <button class="music-player__play" id="music-play" type="button" aria-label="Lire le morceau">▶</button>
+          <span id="music-status" class="music-player__status" aria-live="polite">Chargement du morceau…</span>
+          <label class="music-player__volume" aria-label="Volume">♫
+            <input id="music-volume" type="range" min="0" max="1" step="0.01" value="0.65" aria-label="Volume">
+          </label>
+        </div>
+      </div>
+    </section>
     <h2>Projets GitHub</h2>
     <section id="repos" class="grid"></section>
   </main>
