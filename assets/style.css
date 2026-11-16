@@ -125,3 +125,19 @@ header.profile-wrap{padding:54px 24px 30px;background:transparent}
  .profile-card .author-copy h1{font-size:1.05rem}
  .profile-card .author-copy p{font-size:.75rem}
 }
+
+
+/* GitHub topic chips inspired by the supplied tags bar */
+.project-tags{display:flex;flex-wrap:wrap;align-items:center;gap:7px;margin:16px 0 12px}
+.project-tag{display:inline-block;padding:.35em .85em;border:1px solid #28404c;border-radius:2em;color:#9eb6c1;font-size:.74rem;font-weight:700;letter-spacing:.045em;text-transform:uppercase;transition:transform .2s ease,border-color .2s ease,color .2s ease}
+.project-tag:hover{transform:scale(1.08);border-color:#b05bfa;color:#c778ff}
+.project-stats{display:flex;flex-wrap:wrap;gap:4px;margin:4px 0}
+
+/* Animated magic-card edge */
+@property --magic-angle{syntax:"<angle>";initial-value:0deg;inherits:false}
+.project-card{position:relative;isolation:isolate;overflow:visible;border:1px solid transparent;border-radius:18px;background:linear-gradient(145deg,rgba(11,17,24,.98),rgba(7,12,18,.96)) padding-box,conic-gradient(from var(--magic-angle),#5ddcff,#3c67e3 38%,#a855f7 68%,#5ddcff) border-box;box-shadow:0 12px 32px #0008;transition:transform .25s ease,box-shadow .25s ease}
+.project-card:after{position:absolute;inset:-1px;z-index:-1;content:"";border-radius:inherit;background:conic-gradient(from var(--magic-angle),#5ddcff,#3c67e3 38%,#a855f7 68%,#5ddcff);filter:blur(20px);opacity:.16;animation:magic-card-spin 5s linear infinite;transition:opacity .25s ease,filter .25s ease}
+.project-card:hover{transform:translateY(-4px);box-shadow:0 18px 42px #000a}
+.project-card:hover:after{filter:blur(24px);opacity:.42}
+@keyframes magic-card-spin{to{--magic-angle:360deg}}
+@media(prefers-reduced-motion:reduce){.project-card,.project-card:after,.project-tag{animation:none!important;transition:none!important}.project-card:hover{transform:none}}
