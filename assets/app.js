@@ -6,6 +6,76 @@ async function github(endpoint){
  return r.json();
 }
 
+function initNeonBackground(){
+ const reduceMotion=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+ const canvas=document.createElement("canvas");
+ canvas.className="neon-scene";
+ canvas.setAttribute("aria-hidden","true");
+ document.body.prepend(canvas);
+ const ctx=canvas.getContext("2d");
+ if(!ctx)return;
+ const trail=document.createElement("div");
+ trail.className="mouse-trail";
+ trail.setAttribute("aria-hidden","true");
+ document.body.append(trail);
+ const pointerFine=window.matchMedia("(pointer: fine)").matches;
+ let width=0,height=0,dpr=1,mouseX=-100,mouseY=-100,ringX=-100,ringY=-100;
+ const particles=[];
+ function resize(){
+  dpr=Math.min(window.devicePixelRatio||1,2);
+  width=window.innerWidth;height=window.innerHeight;
+  canvas.width=Math.round(width*dpr);canvas.height=Math.round(height*dpr);
+  canvas.style.width=width+"px";canvas.style.height=height+"px";
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+  const count=Math.min(70,Math.max(28,Math.round(width*height/22000)));
+  while(particles.length<count)particles.push({
+   x:Math.random()*width,y:Math.random()*height,
+   vx:(Math.random()-.5)*.35,vy:(Math.random()-.5)*.35,
+   size:Math.random()*1.5+.6,hue:Math.random()>.55?185:285,
+   alpha:Math.random()*.45+.18
+  });
+  particles.length=count;
+ }
+ resize();
+ window.addEventListener("resize",resize,{passive:true});
+ if(pointerFine)window.addEventListener("pointermove",e=>{
+  mouseX=e.clientX;mouseY=e.clientY;
+  trail.style.opacity="1";
+ },{passive:true});
+ document.addEventListener("pointerover",e=>{
+  if(e.target.closest("a,button"))trail.classList.add("is-hovering");
+ });
+ document.addEventListener("pointerout",e=>{
+  if(e.target.closest("a,button"))trail.classList.remove("is-hovering");
+ });
+ function draw(){
+  ctx.clearRect(0,0,width,height);
+  for(let i=0;i<particles.length;i++){
+   const p=particles[i];
+   if(!reduceMotion){p.x+=p.vx;p.y+=p.vy}
+   if(p.x<0||p.x>width)p.vx*=-1;
+   if(p.y<0||p.y>height)p.vy*=-1;
+   ctx.beginPath();ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
+   ctx.fillStyle=`hsla(${p.hue},100%,65%,${p.alpha})`;ctx.fill();
+   for(let j=i+1;j<particles.length;j++){
+    const q=particles[j],dx=p.x-q.x,dy=p.y-q.y,distance=Math.hypot(dx,dy);
+    if(distance<125){
+     ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(q.x,q.y);
+     ctx.strokeStyle=`rgba(0,217,255,${.12*(1-distance/125)})`;ctx.stroke();
+    }
+   }
+  }
+  if(pointerFine&&mouseX>=0){
+   ringX+=(mouseX-ringX)*.18;ringY+=(mouseY-ringY)*.18;
+   trail.style.left=ringX+"px";trail.style.top=ringY+"px";
+   ctx.beginPath();ctx.arc(mouseX,mouseY,25,0,Math.PI*2);
+   ctx.strokeStyle="rgba(0,217,255,.28)";ctx.lineWidth=1;ctx.stroke();
+  }
+  if(!reduceMotion)requestAnimationFrame(draw);
+ }
+ draw();
+}
+
 async function loadProfile(){
  const el=document.getElementById("github-info");
  if(!el) return;
@@ -62,4 +132,5 @@ async function loadProject(){
   console.error(error);
  }
 }
+initNeonBackground();
 loadProfile();loadRepos();loadProject();
