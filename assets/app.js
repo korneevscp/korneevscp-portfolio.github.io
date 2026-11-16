@@ -255,4 +255,5 @@ async function loadCommitNotifications(){
 }
 
 initNeonBackground();
-loadProfile();loadRepos();loadProject();loadCommitNotifications();
+loadProfile();loadRepos();loadProject();
+if(!document.body.classList.contains("project-detail-page"))loadCommitNotifications();
